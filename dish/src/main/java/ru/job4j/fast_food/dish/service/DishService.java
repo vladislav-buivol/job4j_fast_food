@@ -1,6 +1,7 @@
-package service;
+package ru.job4j.fast_food.dish.service;
 
-import model.dish.Dish;
+
+import ru.job4j.fast_food.domain.model.dish.Dish;
 
 public interface DishService {
     void addDish(Dish dish);

@@ -1,4 +1,4 @@
-package model.dish;
+package ru.job4j.fast_food.domain.model.dish;
 
 import java.math.BigDecimal;
 import java.util.List;
