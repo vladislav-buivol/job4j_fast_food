@@ -1,4 +1,4 @@
-package ru.job4j.fast_food.domain.model.client;
+package ru.job4j.fast_food.domain.model.customer;
 
 import lombok.Data;
 

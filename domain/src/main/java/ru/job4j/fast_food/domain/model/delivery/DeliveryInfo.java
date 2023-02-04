@@ -1,7 +1,7 @@
 package ru.job4j.fast_food.domain.model.delivery;
 
 import lombok.Data;
-import ru.job4j.fast_food.domain.model.client.Address;
+import ru.job4j.fast_food.domain.model.customer.Address;
 
 @Data
 public class DeliveryInfo {
