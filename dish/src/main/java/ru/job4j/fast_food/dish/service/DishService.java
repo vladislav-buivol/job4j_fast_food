@@ -4,13 +4,16 @@ package ru.job4j.fast_food.dish.service;
 import org.springframework.stereotype.Service;
 import ru.job4j.fast_food.domain.model.dish.Dish;
 
+import java.util.Collection;
+
 @Service
 public interface DishService {
-    void addProduct(Dish dish);
 
-    void deleteProduct(Dish dish);
+    Collection<Dish> findAll();
 
-    void updateProduct(Dish dish);
+    Dish addDish(Dish dish);
 
-    void findById(int id);
+    void delete(int id);
+
+    Dish findById(int id);
 }

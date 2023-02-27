@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+          crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <style>
+        .ingredient-list {
+            max-height: 70px; /* set the maximum height for the list */
+            overflow: hidden; /* hide the overflow beyond the max-height */
+            margin-bottom: 0; /* remove the default margin */
+        }
+
+        .ingredient-list li {
+            list-style: none; /* remove the bullet point */
+        }
+
+        .show-more {
+            margin-top: 10px; /* add some margin before the button */
+        }
+
+        .hidden {
+            display: none; /* hide the hidden class */
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Dishes</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Ingredients</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="dish : ${dishes}">
+            <td th:text="${dish.name}"></td>
+            <td th:text="${dish.description}"></td>
+            <td th:text="${dish.price}"></td>
+            <td th:id="${dish.id}">
+                <ul class="ingredient-list">
+                    <li th:each="ingredient, iter : ${dish.ingredients}" th:class="${iter.index >= 2} ? 'hidden'">
+                        <span th:text="${ingredient.name}"></span>
+                    </li>
+                </ul>
+                <button class="btn btn-link show-more" th:if="${dish.ingredients.size() > 2}"
+                        onclick="showMore(this)">Show more
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script>
+    function showMore(button) {
+        const td = button.parentNode; // get the parent td element
+        const hiddenIngredients = td.querySelectorAll('.hidden'); // get all hidden ingredients
+        hiddenIngredients.forEach((ingredient) => { // show each hidden ingredient
+            ingredient.classList.remove('hidden');
+        });
+        //button.style.display = 'none'; // hide the button
+
+        button.style.display = 'none';
+
+        const hideButton = document.createElement('button');
+        hideButton.classList.add('btn', 'btn-link', 'hide-button');
+        hideButton.textContent = 'Hide';
+        hideButton.onclick = hideMore;
+        td.appendChild(hideButton);
+    }
+</script>
+</body>
+</html>
