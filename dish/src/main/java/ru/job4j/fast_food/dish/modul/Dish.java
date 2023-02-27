@@ -1,7 +1,8 @@
-package ru.job4j.fast_food.domain.model.dish;
-
+package ru.job4j.fast_food.dish.modul;
+/*
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import ru.job4j.fast_food.domain.model.order.Product;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -10,7 +11,7 @@ import java.util.List;
 @Data
 @Table(name = "dish")
 @Entity
-public class Dish implements Product {
+public class Dish {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -18,7 +19,7 @@ public class Dish implements Product {
     private String description;
     private String name;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+  /*  @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "dish_ingredient", joinColumns = {
             @JoinColumn(name = "dish_id", referencedColumnName = "id",
                     nullable = false)},
@@ -35,3 +36,4 @@ public class Dish implements Product {
         this.name = name;
     }
 }
+*/
