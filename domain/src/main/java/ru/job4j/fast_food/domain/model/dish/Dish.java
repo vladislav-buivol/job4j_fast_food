@@ -5,7 +5,7 @@ import ru.job4j.fast_food.domain.model.order.Product;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.List;
+import java.util.Set;
 
 @Data
 @Table(name = "dish")
@@ -18,14 +18,14 @@ public class Dish implements Product {
     private String description;
     private String name;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(cascade = {CascadeType.MERGE})
     @JoinTable(name = "dish_ingredient", joinColumns = {
             @JoinColumn(name = "dish_id", referencedColumnName = "id",
                     nullable = false)},
             inverseJoinColumns = {
                     @JoinColumn(name = "ingredient_id", referencedColumnName = "id", nullable = false)
             })
-    private List<Ingredient> components;
+    private Set<Ingredient> ingredients;
 
     public Dish() {
     }

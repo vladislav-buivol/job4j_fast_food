@@ -13,5 +13,7 @@ public class Ingredient {
     private int id;
 
     private String name;
+
+    @Column(name = "is_allergen")
     private boolean isAllergen;
 }
