@@ -6,6 +6,6 @@
     <include file="db/1_create_dish.sql" relativeToChangelogFile="true"/>
     <include file="db/2_create_ingredient.sql" relativeToChangelogFile="true"/>
     <include file="db/3_dish_ingredient.sql" relativeToChangelogFile="true"/>
-    <!--<include file="db/4_inserts.sql" relativeToChangelogFile="true"/>-->
+    <!--<include file="db/inserts.sql" relativeToChangelogFile="true"/>-->
 
 </databaseChangeLog>

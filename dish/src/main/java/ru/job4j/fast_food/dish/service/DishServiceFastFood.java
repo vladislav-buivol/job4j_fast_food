@@ -2,7 +2,6 @@ package ru.job4j.fast_food.dish.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ru.job4j.fast_food.dish.repository.DishRepository;
 import ru.job4j.fast_food.dish.repository.IngredientRepository;
 import ru.job4j.fast_food.domain.model.dish.Dish;
@@ -33,7 +32,6 @@ public class DishServiceFastFood implements DishService {
     }
 
     @Override
-    @Transactional
     public Dish addDish(Dish dish) {
 
         for (Ingredient ingredient : dish.getIngredients()) {

@@ -7,20 +7,37 @@ public class DishApiMapping {
     private String endpoint;
 
     @Value("${dish.find-all}")
-    public String FIND_ALL;
+    private String findAll;
 
     @Value("${dish.add}")
-    public String ADD;
+    private String add;
+
+    @Value("${dish.find-by-id}")
+    private String findById;
+
+    @Value("${dish.delete}")
+    private String delete;
+
+    public DishApiMapping() {
+    }
 
     public String getEndpoint() {
         return endpoint;
     }
 
     public String getFindAll() {
-        return endpoint + FIND_ALL;
+        return endpoint + findAll;
     }
 
     public String getAdd() {
-        return endpoint + ADD;
+        return endpoint + add;
+    }
+
+    public String getFindById() {
+        return endpoint + findById;
+    }
+
+    public String getDelete(int id) {
+        return endpoint + delete + "/" + id;
     }
 }

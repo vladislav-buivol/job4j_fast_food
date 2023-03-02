@@ -54,11 +54,11 @@
             <td th:text="${dish.price}"></td>
             <td th:id="${dish.id}">
                 <ul class="ingredient-list">
-                    <li th:each="ingredient, iter : ${dish.ingredient}" th:class="${iter.index >= 2} ? 'hidden'">
+                    <li th:each="ingredient, iter : ${dish.ingredients}" th:class="${iter.index >= 2} ? 'hidden'">
                         <span th:text="${ingredient.name}"></span>
                     </li>
                 </ul>
-                <button class="btn btn-link show-more" th:if="${dish.ingredient.size() > 2}"
+                <button class="btn btn-link show-more" th:if="${dish.ingredients.size() > 2}"
                         onclick="showMore(this)">Show more
                 </button>
             </td>

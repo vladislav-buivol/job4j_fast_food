@@ -1,5 +1,6 @@
 package ru.job4j.fast_food.domain.model.dish;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import ru.job4j.fast_food.domain.model.order.Product;
 

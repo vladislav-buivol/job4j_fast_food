@@ -1,8 +1,10 @@
 package ru.job4j.fast_food.domain.model.dish;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Data
 @Table(name = "ingredient")
@@ -16,4 +18,8 @@ public class Ingredient {
 
     @Column(name = "is_allergen")
     private boolean isAllergen;
+
+    @ManyToMany(mappedBy = "ingredients")
+    @JsonIgnore
+    private transient Set<Dish> dishes;
 }
