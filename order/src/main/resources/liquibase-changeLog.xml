@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <include file="db/1_create_address.sql" relativeToChangelogFile="true"/>
+    <include file="db/2_create_customer.sql" relativeToChangelogFile="true"/>
+    <include file="db/3_create_payment.sql" relativeToChangelogFile="true"/>
+    <include file="db/4_create_delivery_info.sql" relativeToChangelogFile="true"/>
+    <include file="db/5_create_cart.sql" relativeToChangelogFile="true"/>
+    <include file="db/6_create_quantity.sql" relativeToChangelogFile="true"/>
+    <include file="db/7_create_order.sql" relativeToChangelogFile="true"/>
+    <!-- <include file="db/inserts.sql" relativeToChangelogFile="true"/>!-->
+
+
+</databaseChangeLog>

@@ -1,12 +1,10 @@
 package ru.job4j.fast_food.service;
 
-import org.springframework.stereotype.Service;
 import ru.job4j.fast_food.domain.model.customer.ClientCard;
-import ru.job4j.fast_food.domain.model.order.OrderStatus;
+import ru.job4j.fast_food.domain.model.order.JobStatus;
 
-@Service
 public interface CustomerService {
     ClientCard buyCard(ClientCard clientCard);
 
-    OrderStatus checkStatus(int orderId);
+    JobStatus checkStatus(int orderId);
 }

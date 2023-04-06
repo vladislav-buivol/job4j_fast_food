@@ -1,6 +1,6 @@
 package ru.job4j.fast_food.domain.model.order;
 
-public enum OrderStatus {
+public enum JobStatus {
     QUEUED_FOR_PROCESSING,
     IN_PROGRESS,
     READY,

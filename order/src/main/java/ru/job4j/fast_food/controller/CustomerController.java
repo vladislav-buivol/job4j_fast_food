@@ -6,16 +6,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.job4j.fast_food.domain.model.customer.ClientCard;
-import ru.job4j.fast_food.domain.model.order.OrderStatus;
-import ru.job4j.fast_food.service.CustomerService;
+import ru.job4j.fast_food.domain.model.order.JobStatus;
+import ru.job4j.fast_food.service.CustomerServiceFastFood;
 
 @RestController
 @RequestMapping("/customer")
 public class CustomerController {
 
-    private final CustomerService customerService;
+    private final CustomerServiceFastFood customerService;
 
-    public CustomerController(CustomerService customerService) {
+    public CustomerController(CustomerServiceFastFood customerService) {
         this.customerService = customerService;
     }
 
@@ -25,7 +25,7 @@ public class CustomerController {
     }
 
     @PostMapping("/checkStatus")
-    public ResponseEntity<OrderStatus> checkStatus(int orderId) {
+    public ResponseEntity<JobStatus> checkStatus(int orderId) {
         return new ResponseEntity<>(customerService.checkStatus(orderId), HttpStatus.ACCEPTED);
     }
 }

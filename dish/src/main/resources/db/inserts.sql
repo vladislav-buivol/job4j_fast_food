@@ -1,13 +1,13 @@
-INSERT INTO dish (id, name, price, description)
-VALUES (2, 'Pork steak with cheese', 50, NULL),
-       (1, 'Pasta carbonara', 10.3, NULL);
+INSERT INTO dish (name, price, description)
+VALUES ( 'Pork steak with cheese', 50, NULL),
+       ('Pasta carbonara', 10.3, NULL);
 
 
 INSERT INTO ingredient (id, name, is_allergen)
-VALUES (1, 'Pasta', false),
-       (2, 'Cheese', false),
-       (3, 'Pork', false),
-       (4, 'Salad', false);
+VALUES ('Pasta', false),
+       ('Cheese', false),
+       ('Pork', false),
+       ( 'Salad', false);
 
 
 INSERT INTO dish_ingredient (dish_id, ingredient_id)

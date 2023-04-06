@@ -1,11 +1,11 @@
 package ru.job4j.fast_food.domain.model.dish;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import ru.job4j.fast_food.domain.model.order.Product;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Objects;
 import java.util.Set;
 
 @Data
@@ -34,5 +34,24 @@ public class Dish implements Product {
     public Dish(int id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Dish)) {
+            return false;
+        }
+        Dish dish = (Dish) o;
+        return id == dish.id && Objects.equals(price, dish.price) && Objects.equals(
+                description, dish.description) && Objects.equals(name, dish.name)
+                && Objects.equals(ingredients, dish.ingredients);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, price, description, name, ingredients);
     }
 }
