@@ -16,17 +16,4 @@ public class Cart {
     @OneToMany
     @JoinColumn(name = "order_id", foreignKey = @ForeignKey(name = "ORDER_ID_FK"))
     private Set<Quantity> products;
-
-    public void add(Quantity quantity) {
-        if (!products.contains(quantity)) {
-            products.add(quantity);
-        } else {
-            for (Quantity q : products) {
-                if (q.equals(quantity)) {
-                    q.setValue(quantity.getValue().add(q.getValue()));
-                    return;
-                }
-            }
-        }
-    }
 }

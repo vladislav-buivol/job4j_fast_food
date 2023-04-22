@@ -9,6 +9,7 @@ import ru.job4j.fast_food.domain.model.order.Order;
 import ru.job4j.fast_food.domain.model.order.Quantity;
 import ru.job4j.fast_food.repository.OrderRepository;
 
+import java.util.Set;
 import java.util.function.Consumer;
 
 @Data
@@ -28,7 +29,7 @@ public class OrderServiceFastFood implements OrderService {
     @Override
     public boolean addProduct(int orderId, Quantity quantity) throws ResponseStatusException {
         processOrderOrThrowNotFoundException(orderId, order -> {
-            order.getCart().add(quantity);
+            addQuantityToOrder(quantity, order);
             orderRepository.save(order);
         });
         return true;
@@ -45,7 +46,7 @@ public class OrderServiceFastFood implements OrderService {
 
     @Override
     public boolean delete(int orderId) {
-        processOrderOrThrowNotFoundException(orderId, order -> orderRepository.deleteById(orderId)        );
+        processOrderOrThrowNotFoundException(orderId, order -> orderRepository.deleteById(orderId));
         return true;
     }
 
@@ -55,5 +56,19 @@ public class OrderServiceFastFood implements OrderService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                     String.format("Order with id %s not found", orderId));
         });
+    }
+
+    private void addQuantityToOrder(Quantity quantity, Order order) {
+        Set<Quantity> products = order.getCart().getProducts();
+        if (!products.contains(quantity)) {
+            products.add(quantity);
+        } else {
+            for (Quantity q : products) {
+                if (q.equals(quantity)) {
+                    q.setValue(quantity.getValue().add(q.getValue()));
+                    return;
+                }
+            }
+        }
     }
 }
