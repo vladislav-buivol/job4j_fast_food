@@ -16,5 +16,5 @@ public class DeliveryInfo {
     @JoinColumn(name = "address_id", foreignKey = @ForeignKey(name = "ADDRESS_ID_FK"))
     private Address address;
     private String phone;
-    private String comments;
+    private String comment;
 }

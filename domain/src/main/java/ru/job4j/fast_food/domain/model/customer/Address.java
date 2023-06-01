@@ -13,7 +13,7 @@ public class Address {
     private int id;
     private String city;
     private String street;
-    @Column(name = "hose_nr")
+    @Column(name = "house_nr")
     private String houseNr;
     private String apartments;
 

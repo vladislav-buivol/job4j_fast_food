@@ -11,32 +11,34 @@ import ru.job4j.fast_food.domain.model.notification.GenericNotification;
 import ru.job4j.fast_food.domain.model.order.JobStatus;
 import ru.job4j.fast_food.domain.model.order.Order;
 import ru.job4j.fast_food.domain.model.order.Quantity;
+import ru.job4j.fast_food.publisher.OrderEventPublisher;
 import ru.job4j.fast_food.service.OrderServiceFastFood;
-
-import static ru.job4j.fast_food.domain.model.notification.NotificationType.GENERIC_NOTIFICATION;
 
 @RestController
 @RequestMapping("/api")
 @PropertySource("classpath:order.properties")
 public class OrderController {
     private final OrderServiceFastFood orderService;
+
     @Autowired
-    private KafkaTemplate<Integer, GenericNotification> kafkaTemplate;
+    private KafkaTemplate<Integer, Order> kafkaPreOrderTemplate;
+    private final OrderEventPublisher eventPublisher;
 
-    @Value("${kafka.order-notification}")
-    private String orderNotification;
+    @Value("${kafka.order-preorder}")
+    private String preOrder;
 
-    public OrderController(OrderServiceFastFood orderService) {
+    public OrderController(OrderServiceFastFood orderService, OrderEventPublisher eventPublisher) {
         this.orderService = orderService;
+        this.eventPublisher = eventPublisher;
     }
 
     @PostMapping("${order.create}")
     public ResponseEntity<Order> createOrder(@RequestBody Order order) {
+        order.setJobStatus(JobStatus.QUEUED_FOR_PROCESSING);
         Order savedOrder = orderService.save(order);
-        kafkaTemplate.send(orderNotification, new GenericNotification(
-                String.format("Your order (id: %s) has been placed", savedOrder.getId()),
-                GENERIC_NOTIFICATION));
-        return new ResponseEntity<>(orderService.save(order), HttpStatus.ACCEPTED);
+        kafkaPreOrderTemplate.send(preOrder, savedOrder);
+        eventPublisher.publishOrderCreatedEvent(savedOrder);
+        return new ResponseEntity<>(savedOrder, HttpStatus.ACCEPTED);
     }
 
     @PostMapping("${order.add}" + "/" + "{productId}")
@@ -57,4 +59,5 @@ public class OrderController {
         return new ResponseEntity<>(orderService.updateStatus(orderId, status),
                 HttpStatus.ACCEPTED);
     }
+
 }

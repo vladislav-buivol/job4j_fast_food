@@ -1,4 +1,4 @@
-package ru.job4j.fast_food.configuration;
+package ru.job4j.fast_food.configuration.kafka.consumer;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.IntegerDeserializer;
@@ -10,30 +10,29 @@ import org.springframework.kafka.config.KafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
-import ru.job4j.fast_food.domain.model.notification.GenericNotification;
+import ru.job4j.fast_food.domain.model.order.Order;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
-public class KafkaConsumerConfig {
-
+public class KafkaOrderConsumerConfig {
     @Value("${spring.kafka.bootstrap-servers}")
     private String kafkaServer;
 
-    @Value("${spring.kafka.consumer.group-id}")
+    @Value("${spring.kafka.consumer.group-order}")
     private String kafkaGroupId;
 
     @Bean
     public KafkaListenerContainerFactory<?> kafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<Integer, GenericNotification> factory =
+        ConcurrentKafkaListenerContainerFactory<Integer, Order> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         return factory;
     }
 
     @Bean
-    public ConsumerFactory<Integer, GenericNotification> consumerFactory() {
+    public ConsumerFactory<Integer, Order> consumerFactory() {
         return new DefaultKafkaConsumerFactory<>(consumerConfigs());
     }
 

@@ -7,6 +7,7 @@ import org.springframework.web.server.ResponseStatusException;
 import ru.job4j.fast_food.domain.model.order.JobStatus;
 import ru.job4j.fast_food.domain.model.order.Order;
 import ru.job4j.fast_food.domain.model.order.Quantity;
+import ru.job4j.fast_food.publisher.OrderEventPublisher;
 import ru.job4j.fast_food.repository.OrderRepository;
 
 import java.util.Set;
@@ -16,9 +17,12 @@ import java.util.function.Consumer;
 @Service
 public class OrderServiceFastFood implements OrderService {
     private final OrderRepository orderRepository;
+    private final OrderEventPublisher eventPublisher;
 
-    public OrderServiceFastFood(OrderRepository orderRepository) {
+    public OrderServiceFastFood(OrderRepository orderRepository,
+                                OrderEventPublisher eventPublisher) {
         this.orderRepository = orderRepository;
+        this.eventPublisher = eventPublisher;
     }
 
     @Override
@@ -69,6 +73,21 @@ public class OrderServiceFastFood implements OrderService {
                     return;
                 }
             }
+        }
+    }
+
+    public void publishEvent(Order order) {
+        switch (order.getJobStatus()) {
+            case IN_PROGRESS:
+            case READY:
+            case QUEUED_FOR_PROCESSING:
+                eventPublisher.publishOrderUpdatedEvent(order);
+                break;
+            case CANCELLED:
+                eventPublisher.publishOrderCancelledEvent(order);
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown status");
         }
     }
 }

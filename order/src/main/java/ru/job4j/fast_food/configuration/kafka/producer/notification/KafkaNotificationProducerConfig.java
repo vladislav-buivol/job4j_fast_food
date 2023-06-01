@@ -1,4 +1,4 @@
-package ru.job4j.fast_food.configuration;
+package ru.job4j.fast_food.configuration.kafka.producer.notification;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.IntegerSerializer;
@@ -15,23 +15,23 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
-public class KafkaProducerConfig {
+public class KafkaNotificationProducerConfig {
 
     @Value("${spring.kafka.bootstrap-servers}")
     private String kafkaServer;
 
     @Bean
-    public KafkaTemplate<Integer, GenericNotification> kafkaTemplate() {
-        return new KafkaTemplate<>(producerFactory());
+    public KafkaTemplate<Integer, GenericNotification> kafkaNotificationTemplate() {
+        return new KafkaTemplate<>(notificationProducerFactory());
     }
 
     @Bean
-    public ProducerFactory<Integer, GenericNotification> producerFactory() {
-        return new DefaultKafkaProducerFactory<>(producerConfigs());
+    public ProducerFactory<Integer, GenericNotification> notificationProducerFactory() {
+        return new DefaultKafkaProducerFactory<>(notificationProducerConfigs());
     }
 
     @Bean
-    public Map<String, Object> producerConfigs() {
+    public Map<String, Object> notificationProducerConfigs() {
         Map<String, Object> props = new HashMap<>();
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaServer);
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, IntegerSerializer.class);
