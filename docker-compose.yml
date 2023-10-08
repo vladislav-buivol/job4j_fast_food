@@ -1,0 +1,58 @@
+version: "3.9"
+services:
+  fast_food_dish_db:
+    image: postgres:15
+    container_name: fast_food_dish_db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=fast_food_dish
+      - PGDATA=/var/lib/postgresql/data
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: always
+  job4j_dish:
+    build:
+      context: .
+      dockerfile: ./dish/Dockerfile
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://fast_food_dish_db:5432/fast_food_dish
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=password
+    container_name: job4j_dish
+    depends_on:
+      - fast_food_dish_db
+    volumes:
+      - ./db/liquibase-changeLog.xml:/liquibase/changelog.xml
+  job4j_notification:
+    build:
+      context: .
+      dockerfile: ./order/Dockerfile
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://fast_food_dish_db:5432/fast_food_dish
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=password
+    container_name: job4j_notification
+    depends_on:
+      - fast_food_dish_db
+      - job4j_dish
+    volumes:
+      - ./db/liquibase-changeLog.xml:/liquibase/changelog.xml
+  job4j_order:
+    build:
+      context: .
+      dockerfile: ./order/Dockerfile
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://fast_food_dish_db:5432/fast_food_dish
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=password
+    container_name: job4j_order
+    depends_on:
+      - fast_food_dish_db
+      - job4j_dish
+    volumes:
+      - ./db/liquibase-changeLog.xml:/liquibase/changelog.xml
+volumes:
+  postgres_data:

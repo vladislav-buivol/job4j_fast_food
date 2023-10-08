@@ -10,7 +10,7 @@
     <include file="db/5_create_cart.sql" relativeToChangelogFile="true"/>
     <include file="db/6_create_quantity.sql" relativeToChangelogFile="true"/>
     <include file="db/7_create_order.sql" relativeToChangelogFile="true"/>
-    <!-- <include file="db/inserts.sql" relativeToChangelogFile="true"/>!-->
+    <include file="db/inserts.sql" relativeToChangelogFile="true"/>
 
 
 </databaseChangeLog>

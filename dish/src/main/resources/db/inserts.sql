@@ -1,3 +1,5 @@
+--todo split to several inserts
+
 INSERT INTO dish (name, price, description)
 VALUES ( 'Pork steak with cheese', 50, NULL),
        ('Pasta carbonara', 10.3, NULL);
